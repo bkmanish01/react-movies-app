@@ -1,6 +1,12 @@
 import React, { useState } from 'react';
 import { Card, message, Tag,  Modal, Rate } from 'antd';
-import {LikeOutlined} from '@ant-design/icons'
+import {LikeOutlined} from '@ant-design/icons';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+    getMovieDetail, 
+    getMovieDetailSuccess, 
+    getMovieDetailFailure
+} from "./../slice/MovieDetailSlice";
 import axios from 'axios';
 import styled from "styled-components";
 
@@ -44,7 +50,9 @@ const MovieCard = (props) => {
 
     const [isModalVisible, setIsModalVisible] = useState(false);
 
-    const [movieDetail, setMovieDetail] = useState();
+    // const [movieDetail, setMovieDetail] = useState();
+    const { movieDetail: movieDetails } = useSelector(state => state.movieDetail)
+    const dispatch = useDispatch();
 
     const showModal = (id) => {
         fetchMovieDetailById(id).then(() => {
@@ -56,14 +64,18 @@ const MovieCard = (props) => {
         setIsModalVisible(false);
     };
 
+
     const fetchMovieDetailById = (id) => {
+        dispatch(getMovieDetail())
         return axios
         .get(`${omdb_api}i=${id}&apikey=805e9a51`)
         .then((res) => {
-            setMovieDetail(res?.data)
+            // setMovieDetail(res?.data)
+            dispatch(getMovieDetailSuccess(res?.data))
             return res;
         })
         .catch((error) => {
+            dispatch(getMovieDetailFailure());
             return message.error(error);
         });
     }
@@ -86,20 +98,19 @@ const MovieCard = (props) => {
                 <img alt="example" src={movie?.Poster} />
 
                 <div className="movie-desc">
-                    <h2>{movieDetail?.Title}</h2>
-                    <p><b>Genre :</b> {movieDetail?.Genre}</p>
-                    <p><b>Ratings :</b> <Rate allowHalf disabled  defaultValue={movieDetail?.imdbRating/2} /></p>
-                    <p><b>Released :</b> {movieDetail?.Released}</p>
-                    <p><b>Director :</b> {movieDetail?.Director}</p>
-                    <p><b>Writer :</b> {movieDetail?.Writer}</p>
-                    <p><b>Actors :</b> {movieDetail?.Actors}</p>
-                    <p><b>Description :</b> {movieDetail?.Plot}</p>
+                    <h2>{movieDetails?.Title}</h2>
+                    <p><b>Genre :</b> {movieDetails?.Genre}</p>
+                    <b>Ratings :</b> <Rate allowHalf disabled  defaultValue={movieDetails?.imdbRating/2} />
+                    <p><b>Released :</b> {movieDetails?.Released}</p>
+                    <p><b>Director :</b> {movieDetails?.Director}</p>
+                    <p><b>Writer :</b> {movieDetails?.Writer}</p>
+                    <p><b>Actors :</b> {movieDetails?.Actors}</p>
+                    <p><b>Description :</b> {movieDetails?.Plot}</p>
                 </div>
                 <div>
-                    <p><LikeOutlined /> {movieDetail?.imdbVotes}</p>
+                    <LikeOutlined /> {movieDetails?.imdbVotes}
                 </div>
             </div>
-
         </StyledModal>
         <MovieListDiv className="movie-list">
             <StyledCard
@@ -115,3 +126,6 @@ const MovieCard = (props) => {
 };
 
 export default MovieCard;
+
+
+// &nbsp;&nbsp;&nbsp;<Rate allowHalf disabled  defaultValue={movieDetails?.imdbRating/2} />

@@ -20,7 +20,7 @@ const { Header, Content, Footer } = Layout;
 
 const AppLayout = (props) => {
 
-    const [searchText, setSearchText] = useState();
+    const [searchText, setSearchText] = useState("yatra");
 
     const onSearch = (value) => {
         setSearchText(value);

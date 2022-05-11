@@ -33,25 +33,21 @@ const StyledRow = styled(Row)`
 
 const MovieList = (props) => {
 
-    // const [movies, setMovies] = useState([]);
-
     const [totalPage, setTotalPage] = useState();
      
     const [currentPage, setCurrentPage] = useState(1);
-
-    // const [loading, setLoading] = useState(false);
 
     const dispatch = useDispatch();
 
     const { movies: newMovies, loading: newLoading } = useSelector(state => state.movies);
     const movies = newMovies?.Search || []
+   
 
     const fetchMoviesList = (page, searchValue) => {
         dispatch(getMovies())
         axios
             .get(`${baseUrl}s=${searchValue}&apikey=805e9a51&page=${page}`)
             .then((response) => {
-                // setMovies(response?.data?.Search || []);
                 dispatch(getMoviesSuccess(response?.data))
                 setTotalPage(response?.data?.totalResults);
             })
