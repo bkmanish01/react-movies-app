@@ -50,7 +50,7 @@ const MovieCard = (props) => {
 
     const [isModalVisible, setIsModalVisible] = useState(false);
 
-    // const [movieDetail, setMovieDetail] = useState();
+
     const { movieDetail: movieDetails } = useSelector(state => state.movieDetail)
     const dispatch = useDispatch();
 
@@ -70,7 +70,6 @@ const MovieCard = (props) => {
         return axios
         .get(`${omdb_api}i=${id}&apikey=805e9a51`)
         .then((res) => {
-            // setMovieDetail(res?.data)
             dispatch(getMovieDetailSuccess(res?.data))
             return res;
         })
@@ -127,5 +126,3 @@ const MovieCard = (props) => {
 
 export default MovieCard;
 
-
-// &nbsp;&nbsp;&nbsp;<Rate allowHalf disabled  defaultValue={movieDetails?.imdbRating/2} />
