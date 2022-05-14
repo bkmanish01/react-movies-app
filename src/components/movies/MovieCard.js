@@ -11,7 +11,7 @@ import axios from 'axios';
 import styled from "styled-components";
 
 
-const omdb_api = ` http://www.omdbapi.com/?`;
+const omdb_api = ` https://www.omdbapi.com/?`;
 
 const { Meta } = Card;
 
