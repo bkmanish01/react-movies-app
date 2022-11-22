@@ -21,7 +21,10 @@
 
 .link-item {
   margin-left: 20px;
+  font-size: 1.5rem;
+  margin-bottom: 20px;
 }
- Menu:hover{
+ .nav-link:hover{
   background-color: chocolate;
+  border-radius: 10px;
 }

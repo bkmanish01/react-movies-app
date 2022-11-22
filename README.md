@@ -17,7 +17,7 @@ You may also see any lint errors in the console.
 
 ### `data fetch by axios`
 
-### `css framework/libraries (ant design, styled-component)`
+### `css framework/libraries (ant design, styled-component, bootstrap)`
 
 ### `redux-toolkit for state management`
 
